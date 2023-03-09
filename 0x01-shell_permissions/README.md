@@ -7,3 +7,4 @@ The 4-empty script
 The 5-execute script
 The 6-multiple_permissions script
 The 7-everybody script
+The 8-James_Bond script
