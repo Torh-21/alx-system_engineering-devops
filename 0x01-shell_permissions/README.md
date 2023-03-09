@@ -9,3 +9,4 @@ The 6-multiple_permissions script
 The 7-everybody script
 The 8-James_Bond script
 The 9-John_Doe script
+The 10-mirror_permissions script
