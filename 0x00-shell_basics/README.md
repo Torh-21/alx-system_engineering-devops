@@ -7,3 +7,4 @@ The 4-listmorefiles script displays all the current directory contents, includin
 The 5-listfilesdigitonly script
 The 6-firstdirectory script
 The 7-movethatfile script
+The 8-firstdelete script
