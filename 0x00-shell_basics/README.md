@@ -12,3 +12,4 @@ The 9-firstdirdeletion script
 The 10-back script
 The 11-lists script
 The 12-file_type script
+The 13-symbolic_link script
