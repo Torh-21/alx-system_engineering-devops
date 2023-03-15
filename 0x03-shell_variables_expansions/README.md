@@ -7,3 +7,4 @@ The 4-global_variables lists environment variables.
 The 5-local_variables lists all local variables and environment variables, and functions.
 The 6-create_local_variable creates a new local variable.
 The 7-create_global_variable creates a new global variable.
+The 8-true_knowledge script  prints the result of the addition of 128 with the value stored in the environment variable TRUEKNOWLEDGE, followed by a new line.
