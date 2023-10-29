@@ -1,2 +1,1 @@
-Project readme for alx-system_engineering-devops
-This contains scripts that can be used in shell
+This is the README file for the alx-system_engineering-devops project.
