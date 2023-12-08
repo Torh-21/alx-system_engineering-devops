@@ -4,28 +4,16 @@ sudo apt-get -y update
 sudo apt-get -y install nginx
 sudo ufw allow "Nginx HTTP"
 
-sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
+# Creating an index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
 # Performing a "moved permanently redirection" (301)
-SERVER_CONFIG=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://www.github.com/Torh-21 permanent;
-	}
-}"
+str_for_redir="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Torh-21 permanent;"
 
-sudo sh -c 'echo -e "$SERVER_CONFIG" > /etc/nginx/sites-enabled/default'
+sudo sed -i "s/server_name _;/$str_for_redir/" /etc/nginx/sites-enabled/default
 
-if [ "$(pgrep -c nginx)" -le 0 ]; then
-	service nginx start
-else
-	service nginx restart
-fi
+# Testing configurations syntax errors
+sudo nginx -t
+
+# Restart Nginx after implementing changes
+sudo service nginx restart
