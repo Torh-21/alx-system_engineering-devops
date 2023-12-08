@@ -8,7 +8,8 @@ sudo ufw allow "Nginx HTTP"
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
 # Performing a "moved permanently redirection" (301)
-str_for_redir="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Torh-21 permanent;"
+# str_for_redir="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Torh-21 permanent;"
+str_for_redir="location /redirect_me {\n\t\trewrite ^ https://github.com/Torh-21 permanent;\n\t}"
 
 sudo sed -i "s/server_name _;/$str_for_redir/" /etc/nginx/sites-enabled/default
 
