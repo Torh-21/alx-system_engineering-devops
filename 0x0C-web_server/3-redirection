@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 # Installs, configures, and starts the server
-apt-get -y update
-apt-get -y install nginx
-service nginx start
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
 # Creating an index.html page
-echo 'Hello World!' | tee /var/www/html/index.html
+echo 'Hello World!' | sudo tee /var/www/html/index.html
 
 # Performing a "moved permanently redirection" (301)
-sed -i '24i\	rewrite ^/redirect_me https://www.github.com/Torh-21 permanent;' /etc/nginx/sites-available/default
-
-# Testing configurations syntax errors
-nginx -t
+redirlink="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.github.com/Torh-21 permanent;"
+sudo sed -i "s/server_name _;/$replacement/" /etc/nginx/sites-available/default
 
 # Restart Nginx after implementing changes
-service nginx restart
+sudo service nginx restart
