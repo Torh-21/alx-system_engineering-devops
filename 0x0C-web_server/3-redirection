@@ -2,12 +2,10 @@
 # Installs, configures, and starts the server
 apt-get update
 apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
+sudo service nginx start
 
 # Creating an index.html page
-sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
-
-sudo service nginx start
+echo "Hello World!" | tee /var/www/html/index.html
 
 # Performing a "moved permanently redirection" (301)
 sed -i '24i\	rewrite ^/redirect_me https://www.github.com/Torh-21 permanent;' /etc/nginx/sites-available/default
