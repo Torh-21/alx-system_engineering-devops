@@ -5,12 +5,12 @@ apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
 
 # Creating an index.html page
-echo "Hello World!" | sudo tee /var/www/html/index.html
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
+
+sudo service nginx start
 
 # Performing a "moved permanently redirection" (301)
-str_for_redir="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Torh-21 permanent;"
-
-sed -i "s/server_name _;/$str_for_redir/" /etc/nginx/sites-enabled/default
+sed -i '24i\	rewrite ^/redirect_me https://www.github.com/Torh-21 permanent;' /etc/nginx/sites-available/default
 
 # Testing configurations syntax errors
 sudo nginx -t
