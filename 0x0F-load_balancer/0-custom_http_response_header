@@ -4,12 +4,13 @@
 sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow "Nginx HTTP"
-
+sudo mkdir -p /var/www/html /var/www/error
+sudo chmod -R 755 /var/www
 # Creating an index.html page
-echo 'Hello World' | sudo tee /var/www/html/index.html
+echo 'Hello World' > /var/www/html/index.html
 
 # Creating the error page
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 
 server_config=\
 "server {
@@ -23,7 +24,7 @@ server_config=\
 		try_files \$uri \$uri/ =404;
 	}
 	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://youtube.com permanent;
+		rewrite ^ https://www.github.com/Torh-21 permanent;
 	}
 	error_page 404 /404.html;
 	location = /404.html {
