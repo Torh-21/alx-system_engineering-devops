@@ -8,32 +8,23 @@ sudo ufw allow "Nginx HTTP"
 # Creating an index.html page
 echo 'Hello World' | sudo tee /var/www/html/index.html
 
+# Creating a Permanent redirect link (301)
+redir_var="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Torh-21 permanent;"
+
+sudo sed -i "s/server_name _;/$redir_var/" /etc/nginx/sites-enabled/default
+
+# Creating the error page
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-hn_var=$(hostname)
+str_for_err="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\t\internal;\n\t}"
 
-server_comms=$(cat <<EOF
-server {
-   listen 80 default_server;
-   listen [::]:80 default_server;
+sudo sed -i "s/listen 80 default_server;/$str_for_err/" /etc/nginx/sites-enabled/default
 
-   root /var/www/html;
-   index index.html;
+# Setting up the custom HTTP response header
+sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 
-   location /redirect_me {
-      return 301 https://www.github.com/Torh-21;
-   }
+# Checking for configuration syntax errors
+sudo nginx -t
 
-   error_page 404 /404.html;
-   location = /404.html{
-      internal;
-   }
-
-   add_header X-Served-By "$hn_var";
-}
-EOF
-)
-
-echo "$server_comms" | sudo tee /etc/nginx/sites-enabled/default
-
+# Restart Nginx after making changes
 sudo service nginx restart
