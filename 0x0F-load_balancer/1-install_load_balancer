@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# This bash script installs and configures HAproxy on my lb-01 server
+
+sudo apt-get -y update
+sudo apt-get -y install haproxy
+
+CONFIG_FILE="/etc/haproxy/haproxy.cfg"
+
+CONFIG_BLOCK=$(cat << 'EOF'
+
+listen load_balancer
+	bind *:80
+	mode http
+	balance roundrobin
+	option httpclose
+	option forwardfor
+	server 339126-web-01 34.204.95.25:80 check
+	server 339126-web-02 54.236.51.166:80 check
+EOF
+)
+
+echo "$CONFIG_BLOCK" | sudo tee -a "$CONFIG_FILE" > /dev/null
+
+sudo service haproxy restart
